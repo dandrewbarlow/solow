@@ -38,6 +38,17 @@ class solow:
         part2 = pow( ((self.saveRate * self.productivity) / self.depreciationRate), (1/2) )
         return part1 * part2 * self.labor
 
+    # Solve for x, aka call appropriate function based on string
+    def solveX(self, x):
+        if x == 'K':
+            return self.solveK()
+        elif x == 'Y':
+            return self.solveY()
+        elif x == 'I':
+            return self.solveI()
+        elif x == 'C':
+            return self.solveC()
+
 # Print a usage statement on error
 def usage():
     print("USAGE:")
@@ -87,14 +98,7 @@ def cli():
 
         params = getParams()
         result = solow( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
-        if (process == "K"):
-            print( result.solveK() )
-        elif (process == "Y"):
-            print( result.solveY() )
-        elif (process == "I"):
-            print( result.solveI() )
-        elif (process == "C"):
-            print( result.solveC() )
+        print ( result.solveX(process) )
 
 
 def main():
@@ -105,16 +109,10 @@ def main():
         arg3 = float ( sys.argv[3] )
         arg4 = float ( sys.argv[4] )
 
+        #args = float ( sys.argv[1]::sys.argv[4] )
         result = solow(arg1, arg2, arg3, arg4)
-        K = result.solveK()
-        Y = result.solveY()
-        I = result.solveI()
-        C = result.solveC()
-
-        print ("K = " , K)
-        print ("Y = " , Y)
-        print ("I = " , I)
-        print ("C = " , C)
+        for i in ['K', 'Y', 'I', 'C']:
+            print(i, ' = ', result.solveX(i) )
 
     elif len(sys.argv) == 1:
         cli()
