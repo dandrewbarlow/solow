@@ -45,10 +45,14 @@ def usage():
     print("OR")
     print("./solow.py to enter the cli")
 
+def init():
+    print("Andrew Barlow")
+    print("Type h to get usage")
+
 # Get input for which variable to solve for
 def getInput():
     result = input()
-    if (result not in [ 'K', 'Y', 'I', 'C'] ):
+    if (result not in [ 'K', 'Y', 'I', 'C', 'h'] ):
         print("Error: invalid input")
         return getInput()
     else:
@@ -71,27 +75,41 @@ def getParams():
     return params
 
 def cli():
+    init()
     while (1):
         print("Enter the variable to be solved (K, Y, I, C)")
         process = getInput()
+
+        # if user asks for help, display usage, restart loop
+        if process == 'h':
+            usage()
+            break
+
         params = getParams()
         result = solow( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
         if (process == "K"):
             print( result.solveK() )
-        if (process == "Y"):
+        elif (process == "Y"):
             print( result.solveY() )
-        if (process == "I"):
+        elif (process == "I"):
             print( result.solveI() )
-        if (process == "C"):
+        elif (process == "C"):
             print( result.solveC() )
 
 
 def main():
+    # if called from command line, go ham
     if len (sys.argv) == 5:
-        K = solveK( float (sys.argv[2]), float (sys.argv[2]), float (sys.argv[3]), float (sys.argv[4]) )
-        Y = solveY( float (sys.argv[2]), float (sys.argv[2]), float (sys.argv[3]), float (sys.argv[4]) )
-        I = solveI( float (sys.argv[2]), float (sys.argv[2]), float (sys.argv[3]), float (sys.argv[4]) )
-        C = solveC( float (sys.argv[2]), float (sys.argv[2]), float (sys.argv[3]), float (sys.argv[4]) )
+        arg1 = float ( sys.argv[1] )
+        arg2 = float ( sys.argv[2] )
+        arg3 = float ( sys.argv[3] )
+        arg4 = float ( sys.argv[4] )
+
+        result = solow(arg1, arg2, arg3, arg4)
+        K = result.solveK()
+        Y = result.solveY()
+        I = result.solveI()
+        C = result.solveC()
 
         print ("K = " , K)
         print ("Y = " , Y)
