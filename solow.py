@@ -86,4 +86,8 @@ def main():
     else:
         cli()
 
-main()
+try:
+    main()
+except KeyboardInterrupt:
+    print()
+    print("Continue being excellent")
