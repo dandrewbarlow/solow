@@ -7,11 +7,10 @@
 import pyinputplus as pyin
 import sys
 
-# Print a usage statement on error
 def usage():
     print("USAGE:")
-    print("./solow.py $1 $2 $3 $4  with number arguments")
-    print("OR")
+    print("./solow.py $1 $2 $3 $4")
+    print("or")
     print("./solow.py to enter the cli")
 
 
@@ -71,11 +70,11 @@ def cli():
         if (process == "K"):
             result = solveK( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
         if (process == "Y"):
-            result = solveY( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
+            result = solveY( params[labor], params[productivity], params[saveRate], params[depreciationRate] )
         if (process == "I"):
-            result = solveI( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
+            result = solveI( params[labor], params[productivity], params[saveRate], params[depreciationRate] )
         if (process == "C"):
-            result = solveC( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
+            result = solveC( params[labor], params[productivity], params[saveRate], params[depreciationRate] )
         print( result )
 
 
@@ -94,7 +93,7 @@ def main():
     elif len(sys.argv) == 1:
         cli()
     else:
-        usage()
+        print("Error")
 
 try:
     main()
