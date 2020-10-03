@@ -1,8 +1,10 @@
+
 # Andrew Barlow
 # Solve for a given variable in the Solow production model
 
-# for advanced/easy input checking
+# for advanced input
 import pyinputplus as pyin
+import sys
 
 # Solving for Capital
 def solveK(labor, productivity, saveRate, depreciationRate):
@@ -27,6 +29,7 @@ def solveC(labor, productivity, saveRate, depreciationRate):
     part2 = pow( ((saveRate * productivity) / depreciationRate), (1/2) )
     return part1 * part2 * labor
 
+# Get input for which variable to solve for
 def getInput():
     result = input()
     if (result not in [ 'K', 'Y', 'I', 'C'] ):
@@ -35,6 +38,7 @@ def getInput():
     else:
         return result
 
+# Ask the user for input and validate using pyinputplus
 def getParams():
     labor = pyin.inputNum("Enter labor: ")
     productivity = pyin.inputNum("Enter productivity factor: ")
@@ -58,19 +62,27 @@ def cli():
         if (process == "K"):
             result = solveK( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
         if (process == "Y"):
-            result = solveY( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
+            result = solveY( params[labor], params[productivity], params[saveRate], params[depreciationRate] )
         if (process == "I"):
-            result = solveI( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
+            result = solveI( params[labor], params[productivity], params[saveRate], params[depreciationRate] )
         if (process == "C"):
-            result = solveC( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
+            result = solveC( params[labor], params[productivity], params[saveRate], params[depreciationRate] )
         print( result )
 
 
 def main():
-    cli()
+    if len (sys.argv) == 5:
+        K = solveK( float (sys.argv[2]), float (sys.argv[2]), float (sys.argv[3]), float (sys.argv[4]) )
+        Y = solveY( float (sys.argv[2]), float (sys.argv[2]), float (sys.argv[3]), float (sys.argv[4]) )
+        I = solveI( float (sys.argv[2]), float (sys.argv[2]), float (sys.argv[3]), float (sys.argv[4]) )
+        C = solveC( float (sys.argv[2]), float (sys.argv[2]), float (sys.argv[3]), float (sys.argv[4]) )
 
-try:
-    main()
-except KeyboardInterrupt:
-    print("")
-    print("Have a nice day, ace that shit")
+        print ("K = " , K)
+        print ("Y = " , Y)
+        print ("I = " , I)
+        print ("C = " , C)
+
+    else:
+        cli()
+
+main()
