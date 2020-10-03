@@ -1,3 +1,4 @@
+#! /bin/python3
 
 # Andrew Barlow
 # Solve for a given variable in the Solow production model
