@@ -57,7 +57,7 @@ def usage():
     print("./solow.py to enter the cli")
 
 def init():
-    print("Andrew Barlow")
+    print("Solow Production Model solver - Andrew Barlow")
     print("Type h to get usage")
 
 # Get input for which variable to solve for
@@ -85,20 +85,28 @@ def getParams():
 
     return params
 
-def cli():
-    init()
-    while (1):
-        print("Enter the variable to be solved (K, Y, I, C)")
-        process = getInput()
+def cli(user_input):
+    ## input codes
+    # 0 : init
+    # 1 : continue
+    # -1 : exit
+    if user_input == 0:
+        init()
+        cli(1)
+        return
 
-        # if user asks for help, display usage, restart loop
-        if process == 'h':
-            usage()
-            break
+    print("Enter the variable to be solved (K, Y, I, C)")
+    process = getInput()
 
-        params = getParams()
-        result = solow( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
-        print ( result.solveX(process) )
+    # if user asks for help, display usage, restart loop
+    if process == 'h':
+        usage()
+
+    params = getParams()
+    result = solow( params["labor"], params["productivity"], params["saveRate"], params["depreciationRate"] )
+    print ( result.solveX(process) )
+
+    cli(1)
 
 
 def main():
@@ -115,7 +123,8 @@ def main():
             print(i, ' = ', result.solveX(i) )
 
     elif len(sys.argv) == 1:
-        cli()
+        # call the cli with init flag
+        cli(0)
     else:
         usage()
 
